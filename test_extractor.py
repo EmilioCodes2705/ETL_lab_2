@@ -7,6 +7,7 @@ from etl import extract_from_csv, extract_from_json, extract_from_xml
 
 ###Fixtures 
 
+
 #CSV
 
 @pytest.fixture
@@ -104,7 +105,7 @@ def test_empty_csv_extraction(empty_csv_dir):
     assert df.empty
 
 def test_malformed_csv_extraction(malformed_csv_dir):
-    df = extract_from_csv(malformed_csv_dir)  # Quita os.path.dirname
+    df = extract_from_csv(malformed_csv_dir)   
     assert not df.empty
     assert len(df) == 2
     assert set(df['car_model']) == {'Toyota', 'Honda'}
@@ -112,14 +113,14 @@ def test_malformed_csv_extraction(malformed_csv_dir):
 #test json files
 
 def test_json_extraction(temp_json_dir):
-    df = extract_from_json(temp_json_dir)  # Quita os.path.dirname
+    df = extract_from_json(temp_json_dir)   
     assert not df.empty
     assert len(df) == 1
     assert df['car_model'].iloc[0] == 'Ford'
 
 def test_malformed_json_extraction(malformed_json_dir):
     with pytest.raises(ValueError):
-        extract_from_json(malformed_json_dir)  # Quita os.path.dirname
+        extract_from_json(malformed_json_dir)   
     
 def test_extract_from_json_with_empty_fields(json_with_empty_fields):
     df = extract_from_json(json_with_empty_fields)
@@ -132,17 +133,17 @@ def test_extract_from_json_with_empty_fields(json_with_empty_fields):
 # tests xml files
 
 def test_xml_extraction(temp_xml_dir):
-    df = extract_from_xml(temp_xml_dir)  # Quita os.path.dirname
+    df = extract_from_xml(temp_xml_dir)   
     assert not df.empty
     assert len(df) == 2
     assert set(df['car_model']) == {'Tesla', 'BMW'}
 
 def test_invalid_structure_xml_extraction(invalid_estructure_xml_dir):
     with pytest.raises(ET.ParseError):
-        extract_from_xml(invalid_estructure_xml_dir)  # Quita os.path.dirname
+        extract_from_xml(invalid_estructure_xml_dir)   
 
 def test_missing_data_xml_extraction(missing_data_xml_dir):
-    df = extract_from_xml(missing_data_xml_dir)  # Quita os.path.dirname
+    df = extract_from_xml(missing_data_xml_dir)   
     assert not df.empty
     assert len(df) == 2
     assert 'car_model' in df.columns
